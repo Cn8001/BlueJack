@@ -16,16 +16,52 @@ public class Core {
         set deck[n2] to previous value of deck[n]
         Make it gamedeck.length/2 times
         */ 
-        game.shuffleDeck();
+        game.shuffleDeck(game.getGameDeck());
 
-        /*Initialize hands of player and pc */ //IMPORTANT: Gamedeck contains null elements now.
-        game.initializePlayerDecks(player2, true);
-        game.initializePlayerDecks(pc, false);
+        /*Initialize decks of player and pc */ //IMPORTANT: Gamedeck contains null elements now.
+        game.initializePlayerDeck(player2, true);
+        game.initializePlayerDeck(pc, false);
 
-        for(int i=0;i<player2.getDeck().length;i++){
-            System.out.printf("Color: %d\nSign: %d\nValue: %d\n\n",player2.getDeck()[i].getColor(),player2.getDeck()[i].getSign()
-            ,player2.getDeck()[i].getValue());
+        /* Initialize hands of player and pc */
+        game.initializePlayerHand(player2);
+        game.initializePlayerHand(pc);
+
+
+        /* Test code
+        for(int i=0;i<pc.getHand().length;i++){
+            String color = "";
+            String sign = "";
+            switch(pc.getHand()[i].getColor()){
+                case 1:
+                    color = "Blue";
+                break;
+                case 2:
+                    color = "Yellow";
+                break;
+                case 3:
+                    color = "Red";
+                break;
+                case 4:
+                    color = "Green";
+                break;
+                case 5:
+                    color = "Special";
+                break;
+                default:
+                    break;
+            }
+            switch(pc.getHand()[i].getSign()){
+                case 1:
+                    sign = "+";
+                break;
+                case 2:
+                    sign ="-";
+                break;
+                default:
+                    break;
+            }
+            System.out.printf("(%s) %s%d\n",color,sign,pc.getHand()[i].getValue());
         }
-
+        */
     }
 }
