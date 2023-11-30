@@ -1,11 +1,9 @@
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
-
 public class Card{
     private int color; // 1- Blue 2-Yellow 3-Red 4-Green 5-Special
-    private boolean sign; // + -> false, - -> true
-    private int value;
+    private int sign; // + -> 1, - -> 2, Special -> 3;
+    private int value; // 11 -> flip, 12 -> double
 
-    public Card(int color, boolean sign, int value){
+    public Card(int color, int sign, int value){
         this.color = color;
         this.sign = sign;
         this.value = value;
@@ -17,7 +15,7 @@ public class Card{
     public int getValue() {
         return value;
     }
-    public boolean getSign(){
+    public int getSign(){
         return sign;
     }
 }
