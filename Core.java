@@ -39,32 +39,8 @@ public class Core {
         /*Main game loop */
         int status = 0;
         while(true){
-            if(game.checkBust(player2)){
-                pc.incrementScore();
-                if(pc.getScore() >= 3){
-                    System.out.println("PC WIN");
-                    break;
-                }else{
-                    System.out.println("\n\nPlayer busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
-                    sc.nextLine();
-                    refresh(game,pc,player2);
-                    continue;
-                }
-            }else if(game.checkBust(pc)){
-                player2.incrementScore();
-                if(player2.getScore() >= 3){
-                    System.out.println("Player win");
-                    break;
-                }else{
-                    System.out.println("\n\nPC busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
-                    sc.nextLine();
-                    refresh(game,pc,player2);
-                    continue;
-                }
-            }
-            game.drawBoard(pc, player2);
             if(game.getTurn() == player2){
-                status = playP2(game,sc,pc);
+                status = playP2(game,pc);
                 if(status < 0){
                     System.out.println("You have entered a forbidden thing. Please restart the game.");
                     return;
@@ -73,43 +49,77 @@ public class Core {
             }else{
                 game.setTurn(player2);
             }
-        }
-        /* Test code
-        for(int i=0;i<pc.getHand().length;i++){
-            String color = "";
-            String sign = "";
-            switch(pc.getHand()[i].getColor()){
-                case 1:
-                    color = "Blue";
-                break;
-                case 2:
-                    color = "Yellow";
-                break;
-                case 3:
-                    color = "Red";
-                break;
-                case 4:
-                    color = "Green";
-                break;
-                case 5:
-                    color = "Special";
-                break;
-                default:
+
+            /*Check for reaching 20 */
+            if(game.calculateSum(pc) == 20){
+                pc.incrementScore();
+                if(pc.getScore() >= 3){
+                    game.drawBoard(pc, player2);
+                    System.out.println("PC win, reached 20");
+                    
                     break;
-            }
-            switch(pc.getHand()[i].getSign()){
-                case 1:
-                    sign = "+";
-                break;
-                case 2:
-                    sign ="-";
-                break;
-                default:
+                }else{
+                    game.drawBoard(pc, player2);
+                    System.out.println("\n\nPc won that round\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    if(sc.hasNextLine()){
+                        sc.nextLine();
+                    }
+                    refresh(game,pc,player2);
+                    continue;
+                }
+            }else if(game.calculateSum(player2) == 20){
+                player2.incrementScore();
+                if(player2.getScore() >= 3){
+                    game.drawBoard(pc, player2);
+                    System.out.println("Player win, reached 20");
                     break;
+                }else{
+                    game.drawBoard(pc, player2);
+                    System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    if(sc.hasNextLine()){
+                        sc.nextLine();
+                    }
+                    refresh(game,pc,player2);
+                    continue;
+                }
             }
-            System.out.printf("(%s) %s%d\n",color,sign,pc.getHand()[i].getValue());
+
+
+
+            /*Check for busts */
+            if(game.checkBust(player2)){
+                pc.incrementScore();
+                if(pc.getScore() >= 3){
+                    game.drawBoard(pc, player2);
+                    System.out.println("Player busts, PC WIN");
+                    
+                    break;
+                }else{
+                    game.drawBoard(pc, player2);
+                    System.out.println("\n\nPlayer busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    if(sc.hasNextLine()){
+                        sc.nextLine();
+                    }
+                    refresh(game,pc,player2);
+                    continue;
+                }
+            }else if(game.checkBust(pc)){
+                player2.incrementScore();
+                if(player2.getScore() >= 3){
+                    game.drawBoard(pc, player2);
+                    System.out.println("PC busts, player win");
+                    break;
+                }else{
+                    game.drawBoard(pc, player2);
+                    System.out.println("\n\nPC busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    if(sc.hasNextLine()){
+                        sc.nextLine();
+                    }
+                    refresh(game,pc,player2);
+                    continue;
+                }
+            }
         }
-        */
     }
     public static void refresh(Game game,Player pc,Player p2){
         game.setTurn(p2);
@@ -122,7 +132,8 @@ public class Core {
         
     }
     //Return -1 in error
-    public static int playP2(Game game,Scanner sc,Player pc){
+    public static int playP2(Game game,Player pc){
+        Scanner sc = new Scanner(System.in);
         /*If the player is not standed,draw a card */
         if(!game.getTurn().isStanded()){
             int counter =0;
@@ -146,8 +157,9 @@ public class Core {
                     
                 }
             }
+            game.drawBoard(pc,game.getTurn());
             int choice = 0;
-            System.out.print("(1-)End\n(2-)Stand\n(3-play a card)\nPlease enter a choice > ");
+            System.out.print("(1-)End\n(2-)Stand\n(3-)play a card\nPlease enter a choice > ");
             try{
                 choice = sc.nextInt();
             }catch(InputMismatchException e){
@@ -157,9 +169,11 @@ public class Core {
                 /*End the turn */
                 case 1:
                 break;
+                /* Stand */
                 case 2:
-                /* Stand*/
                     game.getTurn().setStanded(true);
+                default:
+                break;
 
             }
             game.setTurn(pc);

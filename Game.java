@@ -101,8 +101,14 @@ public class Game {
         System.arraycopy(playerDeck, 0, playerHand, 0, player.HAND_NUM);
     }
 
+
     //Returns true if p busted
     public boolean checkBust(Player p){
+        return calculateSum(p) > 20;
+    }
+
+    //Calculates the sum of boarded cards and returns
+    public int calculateSum(Player p){
         int sum = 0;
         for(int i=0;i<p.getBoard().length;i++){
             Card d = p.getBoard()[i];
@@ -138,7 +144,7 @@ public class Game {
                 }
             }
         }
-        return sum > 20;
+        return sum;
     }
 
     public void drawBoard(Player computer,Player p2){
@@ -184,7 +190,7 @@ public class Game {
                 System.out.print(playerHand[i].toString() + " ");
             }
         }
-        System.out.println("\n\n----------------------------------------\n");
+        System.out.println("\n\n\n----------------------------------------\n\n");
     }
     
 }
