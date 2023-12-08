@@ -40,6 +40,50 @@ public class Core {
         int status = 0;
         while(true){
             if(game.getTurn() == player2){
+                //If turn is ours and we are standed, that means the game is over
+                if(player2.isStanded()){
+                    if(game.calculateSum(player2) == game.calculateSum(pc)){
+                        game.drawBoard(pc, player2);
+                        System.out.println("\n\nTIE\n");
+                        refresh(game, pc, player2);
+                        continue;
+                    }else{
+                        int distanceP2 = Math.abs(game.calculateSum(player2) - 20);
+                        int distancePC = Math.abs(game.calculateSum(pc) - 20);
+                        if(distanceP2 < distancePC){
+                            player2.incrementScore();
+                            if(player2.getScore() >= 3){
+                                game.drawBoard(pc, player2);
+                                System.out.println("Player win");
+                                break;
+                            }else{
+                                game.drawBoard(pc, player2);
+                                System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                if(sc.hasNextLine()){
+                                    sc.nextLine();
+                                }
+                                refresh(game,pc,player2);
+                                continue;
+                            }
+                        }
+                        else if(distancePC < distanceP2){
+                            pc.incrementScore();
+                            if(pc.getScore() >= 3){
+                                game.drawBoard(pc, player2);
+                                System.out.println("PC win");
+                                break;
+                            }else{
+                                game.drawBoard(pc, player2);
+                                System.out.println("\n\nPC won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                if(sc.hasNextLine()){
+                                    sc.nextLine();
+                                }
+                                refresh(game,pc,player2);
+                                continue;
+                            }
+                        }
+                    }
+                }
                 status = playP2(game,pc);
                 if(status < 0){
                     System.out.println("You have entered a forbidden thing. Please restart the game.");
@@ -47,6 +91,51 @@ public class Core {
                 }
 
             }else{
+                //If turn is on pc and pc is standed, that means the game is over
+                if(pc.isStanded()){
+                    if(game.calculateSum(player2) == game.calculateSum(pc)){
+                        game.drawBoard(pc, player2);
+                        System.out.println("\n\nTIE\n");
+                        refresh(game, pc, player2);
+                        continue;
+                    }else{
+                        int distanceP2 = Math.abs(game.calculateSum(player2) - 20);
+                        int distancePC = Math.abs(game.calculateSum(pc) - 20);
+                        if(distanceP2 < distancePC){
+                            player2.incrementScore();
+                            if(player2.getScore() >= 3){
+                                game.drawBoard(pc, player2);
+                                System.out.println("Player win");
+                                break;
+                            }else{
+                                game.drawBoard(pc, player2);
+                                System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                if(sc.hasNextLine()){
+                                    sc.nextLine();
+                                }
+                                refresh(game,pc,player2);
+                                continue;
+                            }
+                        }
+                        else if(distancePC < distanceP2){
+                            pc.incrementScore();
+                            if(pc.getScore() >= 3){
+                                game.drawBoard(pc, player2);
+                                System.out.println("PC win");
+                                break;
+                            }else{
+                                game.drawBoard(pc, player2);
+                                System.out.println("\n\nPC won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                if(sc.hasNextLine()){
+                                    sc.nextLine();
+                                }
+                                refresh(game,pc,player2);
+                                continue;
+                            }
+                        }
+                    }
+                    game.setTurn(player2);
+                }
                 game.setTurn(player2);
             }
 
