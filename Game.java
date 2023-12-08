@@ -101,7 +101,47 @@ public class Game {
         System.arraycopy(playerDeck, 0, playerHand, 0, player.HAND_NUM);
     }
 
-    public int drawBoard(Player computer,Player p2){
+    //Returns true if p busted
+    public boolean checkBust(Player p){
+        int sum = 0;
+        for(int i=0;i<p.getBoard().length;i++){
+            Card d = p.getBoard()[i];
+            if(d != null){
+                //If the card is negative
+                if(d.getSign() == 2){
+                    sum -= d.getValue();
+                }else if(d.getSign() == 1){
+                    sum += d.getValue();
+                //If this card is a flip card
+                }else if(d.getSign() == 3 && d.getValue() == 11){
+                    if(p.getBoard()[i-1] != null){
+                        //if previous card is -
+                        if(p.getBoard()[i-1].getSign() == 2){
+                            sum += p.getBoard()[i-1].getValue()*2;
+                        //If previous card is +
+                        }else if(p.getBoard()[i-1].getSign() == 1){
+                            sum -= p.getBoard()[i-1].getValue()*2;
+                        }
+                    }
+                }
+                /*If card is a double card */
+                else if(d.getSign() == 3 && d.getValue() == 12){
+                    if(p.getBoard()[i-1] != null){
+                        //If prev card is -
+                        if(p.getBoard()[i-1].getSign() == 2){
+                            sum -= p.getBoard()[i-1].getValue();
+                        }
+                        else if(p.getBoard()[i-1].getSign() == 1){
+                            sum += p.getBoard()[i-1].getValue();
+                        }
+                    }
+                }
+            }
+        }
+        return sum > 20;
+    }
+
+    public void drawBoard(Player computer,Player p2){
         System.out.print("Computer hand:        ");
         Card[] computerHand = computer.getHand();
         Card[] playerHand = p2.getHand();
@@ -126,7 +166,6 @@ public class Game {
             }
         }
         System.out.println();
-        System.out.println("----------------------------------------");
         System.out.println();
         System.out.print("Player board:        ");
         if(playerBoard[0] == null){
@@ -145,8 +184,7 @@ public class Game {
                 System.out.print(playerHand[i].toString() + " ");
             }
         }
-        System.out.println();
-        return 0;
+        System.out.println("\n\n----------------------------------------\n");
     }
     
 }
