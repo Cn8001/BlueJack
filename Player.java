@@ -2,12 +2,16 @@ public class Player {
     private Card[] hand;
     private Card[] board;
     private Card[] deck;
+    private Card[] playedCards;
+    private int score;
     public final int HAND_NUM = 4;
     
     public Player(Card[] hand, Card[] board, Card[] deck){
         this.hand = hand;
         this.board = board;
         this.deck = deck;
+        this.score = 0;
+        this.playedCards = new Card[40];
     }
 
     /* This function is used for setting a single card inside a Card array, either hand,board or deck */
@@ -22,5 +26,14 @@ public class Player {
     }
     public Card[] getDeck(){
         return deck;
+    }
+    public int getScore(){
+        return score;
+    }
+    public void incrementScore(){
+        score++;
+    }
+    public Card[] getPlayedCards(){
+        return playedCards;
     }
 }

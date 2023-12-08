@@ -26,7 +26,11 @@ public class Core {
         game.initializePlayerHand(player2);
         game.initializePlayerHand(pc);
 
-
+        /*Main game loop */
+        while(true){
+            /*Draw the gameBoard */
+            game.drawBoard(pc, player2);
+        }
         /* Test code
         for(int i=0;i<pc.getHand().length;i++){
             String color = "";
@@ -64,4 +68,5 @@ public class Core {
         }
         */
     }
+    
 }

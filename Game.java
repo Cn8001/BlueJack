@@ -101,4 +101,52 @@ public class Game {
         System.arraycopy(playerDeck, 0, playerHand, 0, player.HAND_NUM);
     }
 
+    public int drawBoard(Player computer,Player p2){
+        System.out.print("Computer hand:        ");
+        Card[] computerHand = computer.getHand();
+        Card[] playerHand = p2.getHand();
+        Card[] computerBoard = computer.getBoard();
+        Card[] playerBoard = p2.getBoard();
+        for(int i=0;i<computerHand.length;i++){
+            if(computerHand[i] == null){
+                System.out.print("O ");
+            }else{
+                System.out.print("X ");
+            }
+        }
+        System.out.println();
+        System.out.print("Computer board:      ");
+        if(computerBoard[0] == null){
+            System.out.println("Empty");
+        }else{
+            for(Card c : computerBoard){
+                if(c != null){
+                    System.out.print(c.toString() + " ");
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("----------------------------------------");
+        System.out.println();
+        System.out.print("Player board:        ");
+        if(playerBoard[0] == null){
+            System.out.println("Empty");
+        }else{
+            for(Card c : playerBoard){
+                if(c != null){
+                    System.out.print(" " +c.toString() + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.print("Player hand:          ");
+        for(int i=0;i<playerHand.length;i++){
+            if(playerHand[i] != null){
+                System.out.print(playerHand[i].toString() + " ");
+            }
+        }
+        System.out.println();
+        return 0;
+    }
+    
 }
