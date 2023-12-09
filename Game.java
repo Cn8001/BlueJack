@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 public class Game {
     private Player turn;
     private Card[] gameDeck;
@@ -148,6 +149,7 @@ public class Game {
     }
 
     public void drawBoard(Player computer,Player p2){
+        System.out.println("\n\n\n");
         System.out.print("Computer hand:        ");
         Card[] computerHand = computer.getHand();
         Card[] playerHand = p2.getHand();
@@ -171,8 +173,7 @@ public class Game {
                 }
             }
         }
-        System.out.println();
-        System.out.println();
+        System.out.println("\n");
         System.out.print("Player board:        ");
         if(playerBoard[0] == null){
             System.out.println("Empty");
@@ -191,6 +192,23 @@ public class Game {
             }
         }
         System.out.println("\n\n\n----------------------------------------\n\n");
+    }
+    /*Return -1 on error */
+    public int throwCard(Scanner sc,Player p){
+        int c = p.selectACard(sc);
+        int index;
+        if(c<0){
+            return -1;
+        }
+        for(index=0;index<p.getBoard().length;index++){
+            if(p.getBoard()[index] == null)
+                break;
+        }
+        /*Set the card which hand of the player null */
+        p.setSingleCard(p.getHand()[c], index, p.getBoard());
+        p.setSingleCard(null, c, p.getHand());
+
+        return 0;
     }
     
 }

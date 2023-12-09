@@ -40,6 +40,9 @@ public class Core {
         int status = 0;
         while(true){
             if(game.getTurn() == player2){
+
+
+
                 //If turn is ours and we are standed, that means the game is over
                 if(player2.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
@@ -91,7 +94,9 @@ public class Core {
                 }
 
             }else{
-                //If turn is on pc and pc is standed, that means the game is over
+
+
+                /*Check for stand,If turn is on pc and pc is standed, that means the game is over */
                 if(pc.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
                         game.drawBoard(pc, player2);
@@ -209,42 +214,27 @@ public class Core {
                 }
             }
         }
+        /*Check for placed 9 cards and 20 */
+        //TODO: Do that function (and, player who reached 20 do not win directly, they should stand.)
     }
     public static void refresh(Game game,Player pc,Player p2){
         game.setTurn(p2);
 
         pc.setStanded(false);
         pc.refreshBoard();
+        pc.setPlayedACard(false);
 
         p2.setStanded(false);
         p2.refreshBoard();
-        
+        p2.setPlayedACard(false);
     }
     //Return -1 in error
     public static int playP2(Game game,Player pc){
         Scanner sc = new Scanner(System.in);
         /*If the player is not standed,draw a card */
         if(!game.getTurn().isStanded()){
-            int counter =0;
-            for(Card c: game.getGameDeck()){
-                /*If it is null continue with the new */
-                if(c != null){
-                    int place = 0;
-                    /*get where to place the card */
-                    for(int i=0;i<game.getTurn().getBoard().length; i++){
-                        if(game.getTurn().getBoard()[i] == null){
-                            place = i;
-                            break;
-                        }
-                    }
-                    game.getTurn().setSingleCard(c, place, game.getTurn().getBoard());
-                    game.getGameDeck()[counter++] = null;
-                    break;
-                }else{
-                    counter++;
-                    continue;
-                    
-                }
+            if(!game.getTurn().getPlayedACard()){
+                addACard(game);
             }
             game.drawBoard(pc,game.getTurn());
             int choice = 0;
@@ -257,10 +247,18 @@ public class Core {
             switch(choice){
                 /*End the turn */
                 case 1:
+                    game.getTurn().setPlayedACard(false);
                 break;
                 /* Stand */
                 case 2:
                     game.getTurn().setStanded(true);
+                    game.getTurn().setPlayedACard(false);
+                    break;
+                /* Throw a card */
+                case 3:
+                    game.throwCard(sc, game.getTurn());
+                    game.getTurn().setPlayedACard(true);
+                    break;
                 default:
                 break;
 
@@ -270,5 +268,31 @@ public class Core {
         
         return 0;
     }
+
+    public static void addACard(Game game){
+        int counter =0;
+        for(Card c: game.getGameDeck()){
+            /*If it is null continue with the new */
+            if(c != null){
+                int place = 0;
+                /*get where to place the card */
+                for(int i=0;i<game.getTurn().getBoard().length; i++){
+                    if(game.getTurn().getBoard()[i] == null){
+                        place = i;
+                        break;
+                    }
+                }
+                game.getTurn().setSingleCard(c, place, game.getTurn().getBoard());
+                game.getGameDeck()[counter++] = null;
+                break;
+            }else{
+                counter++;
+                continue;
+                
+            }
+        }
+    }
+
+
     
 }
