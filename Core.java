@@ -1,7 +1,9 @@
+import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Core {
     public static void main(String[] args) {
+        String playerName = new String();
         Scanner sc = new Scanner(System.in);
         /* Create the game */
         Game game = new Game();
@@ -33,8 +35,14 @@ public class Core {
             game.drawBoard(pc, player2);
 
         /*Start the game*/
-        System.out.println("\nPress enter to start");
-        sc.nextLine();
+        System.out.print("\nPlease enter your name >");
+        try{
+        if(sc.hasNext())
+            playerName = sc.next().trim();
+            sc.nextLine();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         /*Main game loop */
         int status = 0;
@@ -57,11 +65,11 @@ public class Core {
                             player2.incrementScore();
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println("Player win");
+                                System.out.println(playerName+" win");
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
-                                System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                                 if(sc.hasNextLine()){
                                     sc.nextLine();
                                 }
@@ -77,7 +85,7 @@ public class Core {
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
-                                System.out.println("\n\nPC won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                System.out.println("\n\nPC won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                                 if(sc.hasNextLine()){
                                     sc.nextLine();
                                 }
@@ -110,11 +118,11 @@ public class Core {
                             player2.incrementScore();
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println("Player win");
+                                System.out.println(playerName+" win");
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
-                                System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                                 if(sc.hasNextLine()){
                                     sc.nextLine();
                                 }
@@ -130,7 +138,7 @@ public class Core {
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
-                                System.out.println("\n\nPC won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                                System.out.println("\n\nPC won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                                 if(sc.hasNextLine()){
                                     sc.nextLine();
                                 }
@@ -154,7 +162,7 @@ public class Core {
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    System.out.println("\n\nPc won that round\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    System.out.println("\n\nPc won that round\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                     if(sc.hasNextLine()){
                         sc.nextLine();
                     }
@@ -165,11 +173,11 @@ public class Core {
                 player2.incrementScore();
                 if(player2.getScore() >= 3){
                     game.drawBoard(pc, player2);
-                    System.out.println("Player win, reached 20");
+                    System.out.println(playerName+" win, reached 20");
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    System.out.println("\n\nPlayer won that tour\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                     if(sc.hasNextLine()){
                         sc.nextLine();
                     }
@@ -185,12 +193,12 @@ public class Core {
                 pc.incrementScore();
                 if(pc.getScore() >= 3){
                     game.drawBoard(pc, player2);
-                    System.out.println("Player busts, PC WIN");
+                    System.out.println(playerName+" busts, PC WIN");
                     
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    System.out.println("\n\nPlayer busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    System.out.println("\n\n"+playerName+" busts\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                     if(sc.hasNextLine()){
                         sc.nextLine();
                     }
@@ -201,11 +209,11 @@ public class Core {
                 player2.incrementScore();
                 if(player2.getScore() >= 3){
                     game.drawBoard(pc, player2);
-                    System.out.println("PC busts, player win");
+                    System.out.println("PC busts, "+playerName+" win");
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    System.out.println("\n\nPC busts\n\n\nPlayer: "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                    System.out.println("\n\nPC busts\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
                     if(sc.hasNextLine()){
                         sc.nextLine();
                     }
@@ -213,9 +221,41 @@ public class Core {
                     continue;
                 }
             }
+            /*Check for whether placed 9 cards*/
+            if(player2.getBoard().length == 9){
+                int plSum = game.calculateSum(player2);
+                if(pc.getBoard().length != 9){
+                    //Player wins
+                    if((plSum-20)<=0){
+                        player2.incrementScore();
+                        game.drawBoard(pc, player2);
+                        System.out.println("\n\n"+playerName+" won that tour.\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                        if(sc.hasNextLine()){
+                            sc.nextLine();
+                        }
+                        refresh(game,pc,player2);
+                        continue;
+                    }
+                }
+            }
+            if(pc.getBoard().length == 9){
+                int pcSum = game.calculateSum(pc);
+                if(player2.getBoard().length != 9){
+                    //Player wins
+                    if((pcSum-20)<=0){
+                        pc.incrementScore();
+                        game.drawBoard(pc, player2);
+                        System.out.println("\n\nPC won that tour.\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                        if(sc.hasNextLine()){
+                            sc.nextLine();
+                        }
+                        refresh(game,pc,player2);
+                        continue;
+                    }
+                }
+            }
         }
-        /*Check for placed 9 cards and 20 */
-        //TODO: Do that function (and, player who reached 20 do not win directly, they should stand.)
+        sc.close();
     }
     public static void refresh(Game game,Player pc,Player p2){
         game.setTurn(p2);
@@ -241,7 +281,9 @@ public class Core {
             System.out.print("(1-)End\n(2-)Stand\n(3-)play a card\nPlease enter a choice > ");
             try{
                 choice = sc.nextInt();
+                sc.nextLine();
             }catch(InputMismatchException e){
+                sc.close();
                 return -1;
             }
             switch(choice){
@@ -268,7 +310,9 @@ public class Core {
         
         return 0;
     }
+    public static void writeFile(){
 
+    }
     public static void addACard(Game game){
         int counter =0;
         for(Card c: game.getGameDeck()){
