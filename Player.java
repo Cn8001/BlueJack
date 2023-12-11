@@ -5,7 +5,6 @@ public class Player {
     private Card[] hand;
     private Card[] board;
     private Card[] deck;
-    private Card[] playedCards;
     private int score;
     private boolean standed;
     private boolean playedACard;
@@ -16,7 +15,6 @@ public class Player {
         this.board = board;
         this.deck = deck;
         this.score = 0;
-        this.playedCards = new Card[40];
         this.standed = false;
         this.playedACard = false;
     }
@@ -44,9 +42,6 @@ public class Player {
     }
     public void incrementScore(){
         score++;
-    }
-    public Card[] getPlayedCards(){
-        return playedCards;
     }
     public boolean isStanded(){
         return standed;
