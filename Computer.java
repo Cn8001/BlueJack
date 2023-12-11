@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Computer {
@@ -30,11 +29,10 @@ public class Computer {
                             self.setPlayedACard(true);
                             game.setTurn(player);
                             isPlayed = true;
-                            System.out.println("Computer played a card.");
+                            System.out.println("\nComputer played a card.");
                         }
                     }
                 }
-                //TODO: Not win when reach 20,wait for the opponent.
             }
             //Choose to stand
             else if(game.calculateSum(self) >= 17 && !isPlayed){
@@ -42,7 +40,7 @@ public class Computer {
                 self.setPlayedACard(false);
                 game.setTurn(player);
                 isPlayed = true;
-                System.out.println("Computer chose to stand.");
+                System.out.println("\nComputer chose to stand.");
             }
             //Choose to throw +
             else if(game.calculateSum(self) < 10){
@@ -56,7 +54,7 @@ public class Computer {
                             self.setPlayedACard(true);
                             game.setTurn(player);
                             isPlayed = true;
-                            System.out.println("Computer played a card.");
+                            System.out.println("\nComputer played a card.");
                         }
                     }
                 }
@@ -67,13 +65,12 @@ public class Computer {
                 self.setPlayedACard(false);
                 game.setTurn(player);
                 isPlayed = false;
-                System.out.println("Computer ended the turn.");
+                System.out.println("\nComputer ended the turn.");
             }
             
             /*End thinking */
             if(!self.getPlayedACard()){
                 Core.addACard(game,self);
-                game.drawBoard(self, player);
             }
         }
         return choice;

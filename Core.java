@@ -35,7 +35,7 @@ public class Core {
             game.drawBoard(pc, player2);
 
         /*Start the game*/
-        System.out.print("\nPlease enter your name >");
+        System.out.print("\nPlease enter your name > ");
         try{
         if(sc.hasNext())
             playerName = sc.next().trim();
@@ -95,6 +95,36 @@ public class Core {
                     }
                     game.setTurn(pc);
                 }
+                if(game.calculateSum(player2) == 20 && game.getTurn() == player2){
+                    player2.incrementScore();
+                    //Player reached 3 points.
+                    /*Absoulte win */
+                    if(player2.getScore() >= 3){
+                        game.drawBoard(pc, player2);
+                        System.out.println(playerName+" win, reached 20");
+                        break;
+                    }else{
+                        game.drawBoard(pc, player2);
+                        int allBlue = 0;
+                        for(Card c: player2.getBoard()){
+                            if(c != null){
+                                if(c.getColor() == 1)
+                                    allBlue++;
+                            }
+                        }
+                        /*Absoulte win */
+                        if(allBlue == player2.getBoard().length){
+                            System.out.println("Bluejack, "+playerName+" win");
+                            break;
+                        }
+                        System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                        if(sc.hasNextLine()){
+                            sc.nextLine();
+                        }
+                        refresh(game,pc,player2);
+                        continue;
+                    }
+                }
                 status = playP2(game,pc);
                 if(status < 0){
                     System.out.println("You have entered a forbidden thing. Please restart the game.");
@@ -102,6 +132,39 @@ public class Core {
                 }
 
             }else{
+
+                /*Check for reaching 20 */
+                //PC reached 20
+                if(game.calculateSum(pc) == 20){
+                    pc.incrementScore();
+                    //PC reached 3 points
+                    /*Absoulte win */
+                    if(pc.getScore() >= 3){
+                        game.drawBoard(pc, player2);
+                        System.out.println("PC win, reached 20");
+                        break;
+                    }else{
+                        game.drawBoard(pc, player2);
+                        int allBlue = 0;
+                        for(Card c: pc.getBoard()){
+                            if(c != null){
+                                if(c.getColor() == 1)
+                                    allBlue++;
+                            }
+                        }
+                        /*Absoulte win */
+                        if(allBlue == pc.getBoard().length){
+                            System.out.println("Bluejack, PC win");
+                            break;
+                        }
+                        System.out.println("\n\nPc won that round\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
+                        if(sc.hasNextLine()){
+                            sc.nextLine();
+                        }
+                        refresh(game,pc,player2);
+                        continue;
+                    }
+                }
 
 
                 /*Check for stand,If turn is on pc and pc is standed, that means the game is over */
@@ -157,69 +220,6 @@ public class Core {
                 ai.play();
 
                 
-            }
-
-            /*Check for reaching 20 */
-            //PC reached 20
-            if(game.calculateSum(pc) == 20 && game.getTurn() == pc){
-                pc.incrementScore();
-                //PC reached 3 points
-                /*Absoulte win */
-                if(pc.getScore() >= 3){
-                    game.drawBoard(pc, player2);
-                    System.out.println("PC win, reached 20");
-                    break;
-                }else{
-                    game.drawBoard(pc, player2);
-                    int allBlue = 0;
-                    for(Card c: pc.getBoard()){
-                        if(c != null){
-                            if(c.getColor() == 1)
-                                allBlue++;
-                        }
-                    }
-                    /*Absoulte win */
-                    if(allBlue == pc.getBoard().length){
-                        System.out.println("Bluejack, PC win");
-                        break;
-                    }
-                    System.out.println("\n\nPc won that round\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
-                    if(sc.hasNextLine()){
-                        sc.nextLine();
-                    }
-                    refresh(game,pc,player2);
-                    continue;
-                }
-            //Player reached 20
-            }else if(game.calculateSum(player2) == 20 && game.getTurn() == player2){
-                player2.incrementScore();
-                //Player reached 3 points.
-                /*Absoulte win */
-                if(player2.getScore() >= 3){
-                    game.drawBoard(pc, player2);
-                    System.out.println(playerName+" win, reached 20");
-                    break;
-                }else{
-                    game.drawBoard(pc, player2);
-                    int allBlue = 0;
-                    for(Card c: player2.getBoard()){
-                        if(c != null){
-                            if(c.getColor() == 1)
-                                allBlue++;
-                        }
-                    }
-                    /*Absoulte win */
-                    if(allBlue == player2.getBoard().length){
-                        System.out.println("Bluejack, "+playerName+" win");
-                        break;
-                    }
-                    System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
-                    if(sc.hasNextLine()){
-                        sc.nextLine();
-                    }
-                    refresh(game,pc,player2);
-                    continue;
-                }
             }
 
 
@@ -281,7 +281,7 @@ public class Core {
                     }
                 }
             }
-            if(pc.getBoard().length == 9){
+            else if(pc.getBoard().length == 9){
                 int pcSum = game.calculateSum(pc);
                 if(player2.getBoard().length != 9){
                     //PC wins
