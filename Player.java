@@ -71,6 +71,7 @@ public class Player {
         System.out.print("Please choose a card >");
         try{
             choice = sc.nextInt();
+            sc.nextLine();
         }catch(InputMismatchException e){
             return -1;
         }

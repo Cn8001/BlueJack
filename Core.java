@@ -48,11 +48,8 @@ public class Core {
         int status = 0;
         while(true){
             if(game.getTurn() == player2){
-
-
-
                 //If turn is ours and we are standed, that means the game is over
-                if(player2.isStanded()){
+                if(player2.isStanded() || pc.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
                         game.drawBoard(pc, player2);
                         System.out.println("\n\nTIE\n");
@@ -96,6 +93,7 @@ public class Core {
                             }
                         }
                     }
+                    game.setTurn(pc);
                 }
                 status = playP2(game,pc);
                 if(status < 0){
@@ -107,7 +105,7 @@ public class Core {
 
 
                 /*Check for stand,If turn is on pc and pc is standed, that means the game is over */
-                if(pc.isStanded()){
+                if(pc.isStanded() || player2.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
                         game.drawBoard(pc, player2);
                         System.out.println("\n\nTIE\n");
@@ -153,12 +151,17 @@ public class Core {
                     }
                     game.setTurn(player2);
                 }
-                game.setTurn(player2);
+
+                //Make your moves
+                Computer ai = new Computer(sc,game, pc, player2);
+                ai.play();
+
+                
             }
 
             /*Check for reaching 20 */
             //PC reached 20
-            if(game.calculateSum(pc) == 20){
+            if(game.calculateSum(pc) == 20 && game.getTurn() == pc){
                 pc.incrementScore();
                 //PC reached 3 points
                 /*Absoulte win */
@@ -188,7 +191,7 @@ public class Core {
                     continue;
                 }
             //Player reached 20
-            }else if(game.calculateSum(player2) == 20){
+            }else if(game.calculateSum(player2) == 20 && game.getTurn() == player2){
                 player2.incrementScore();
                 //Player reached 3 points.
                 /*Absoulte win */
@@ -319,14 +322,16 @@ public class Core {
         /*If the player is not standed,draw a card */
         if(!game.getTurn().isStanded()){
             if(!game.getTurn().getPlayedACard()){
-                addACard(game);
+                addACard(game,game.getTurn());
             }
             game.drawBoard(pc,game.getTurn());
             int choice = 0;
             System.out.print("(1-)End\n(2-)Stand\n(3-)play a card\nPlease enter a choice > ");
             try{
-                choice = sc.nextInt();
-                sc.nextLine();
+                if(sc.hasNextInt())
+                    choice = sc.nextInt();
+                if(sc.hasNextLine())
+                    sc.nextLine();
             }catch(InputMismatchException e){
                 sc.close();
                 return -1;
@@ -358,20 +363,20 @@ public class Core {
     public static void writeFile(){
 
     }
-    public static void addACard(Game game){
+    public static void addACard(Game game,Player p){
         int counter =0;
         for(Card c: game.getGameDeck()){
             /*If it is null continue with the new */
             if(c != null){
                 int place = 0;
                 /*get where to place the card */
-                for(int i=0;i<game.getTurn().getBoard().length; i++){
-                    if(game.getTurn().getBoard()[i] == null){
+                for(int i=0;i<p.getBoard().length; i++){
+                    if(p.getBoard()[i] == null){
                         place = i;
                         break;
                     }
                 }
-                game.getTurn().setSingleCard(c, place, game.getTurn().getBoard());
+                p.setSingleCard(c, place, p.getBoard());
                 game.getGameDeck()[counter++] = null;
                 break;
             }else{
@@ -381,7 +386,4 @@ public class Core {
             }
         }
     }
-
-
-    
 }
