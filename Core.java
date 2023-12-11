@@ -168,18 +168,15 @@ public class Core {
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    boolean allBlue = false;
+                    int allBlue = 0;
                     for(Card c: pc.getBoard()){
                         if(c != null){
-                            if(c.getColor() == 1){
-                                allBlue=true;
-                            }else{
-                                allBlue=false;
-                            }
+                            if(c.getColor() == 1)
+                                allBlue++;
                         }
                     }
                     /*Absoulte win */
-                    if(allBlue){
+                    if(allBlue == pc.getBoard().length){
                         System.out.println("Bluejack, PC win");
                         break;
                     }
@@ -201,18 +198,15 @@ public class Core {
                     break;
                 }else{
                     game.drawBoard(pc, player2);
-                    boolean allBlue = false;
+                    int allBlue = 0;
                     for(Card c: player2.getBoard()){
                         if(c != null){
-                            if(c.getColor() == 1){
-                                allBlue=true;
-                            }else{
-                                allBlue=false;
-                            }
+                            if(c.getColor() == 1)
+                                allBlue++;
                         }
                     }
                     /*Absoulte win */
-                    if(allBlue){
+                    if(allBlue == player2.getBoard().length){
                         System.out.println("Bluejack, "+playerName+" win");
                         break;
                     }
