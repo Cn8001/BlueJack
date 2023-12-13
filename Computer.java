@@ -1,18 +1,14 @@
-import java.util.Scanner;
-
 public class Computer {
     private Game game;
     private Player player;
     private Player self;
     private int choice=0;
     private boolean isPlayed;
-    private Scanner sc;
-    public Computer(Scanner sc,Game game, Player self, Player opponent){
+    public Computer(Game game, Player self, Player opponent){
         this.game = game;
         this.self = self;
         this.player = opponent;
         this.isPlayed = false;
-        this.sc = sc;
     }
 
     public int play(){

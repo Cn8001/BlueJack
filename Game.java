@@ -121,25 +121,29 @@ public class Game {
                     sum += d.getValue();
                 //If this card is a flip card
                 }else if(d.getSign() == 3 && d.getValue() == 11){
-                    if(p.getBoard()[i-1] != null){
-                        //if previous card is -
-                        if(p.getBoard()[i-1].getSign() == 2){
-                            sum += p.getBoard()[i-1].getValue()*2;
-                        //If previous card is +
-                        }else if(p.getBoard()[i-1].getSign() == 1){
-                            sum -= p.getBoard()[i-1].getValue()*2;
-                        }
+                        if(p.getBoard().length >= i-1 && i-1 >= 0){
+                            if(p.getBoard()[i-1] != null){
+                                //if previous card is -
+                                if(p.getBoard()[i-1].getSign() == 2){
+                                    sum += p.getBoard()[i-1].getValue()*2;
+                                //If previous card is +
+                                }else if(p.getBoard()[i-1].getSign() == 1){
+                                    sum -= p.getBoard()[i-1].getValue()*2;
+                                }
+                            }
                     }
                 }
                 /*If card is a double card */
                 else if(d.getSign() == 3 && d.getValue() == 12){
-                    if(p.getBoard()[i-1] != null){
-                        //If prev card is -
-                        if(p.getBoard()[i-1].getSign() == 2){
-                            sum -= p.getBoard()[i-1].getValue();
-                        }
-                        else if(p.getBoard()[i-1].getSign() == 1){
-                            sum += p.getBoard()[i-1].getValue();
+                    if(p.getBoard().length >= i-1 && i-1 >= 0){
+                        if(p.getBoard()[i-1] != null){
+                            //If prev card is -
+                            if(p.getBoard()[i-1].getSign() == 2){
+                                sum -= p.getBoard()[i-1].getValue();
+                            }
+                            else if(p.getBoard()[i-1].getSign() == 1){
+                                sum += p.getBoard()[i-1].getValue();
+                            }
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-import java.util.Formatter;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Core {
@@ -44,6 +44,10 @@ public class Core {
             e.printStackTrace();
         }
 
+        /*Our file class */
+        FileOperations fop = new FileOperations("gamehistory.txt", playerName);
+        
+
         /*Main game loop */
         int status = 0;
         while(true){
@@ -64,6 +68,7 @@ public class Core {
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
                                 System.out.println(playerName+" win");
+                                fop.writeToFile(player2, pc);
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
@@ -81,6 +86,7 @@ public class Core {
                             if(pc.getScore() >= 3){
                                 game.drawBoard(pc, player2);
                                 System.out.println("PC win");
+                                fop.writeToFile(player2, pc);
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
@@ -102,6 +108,7 @@ public class Core {
                     if(player2.getScore() >= 3){
                         game.drawBoard(pc, player2);
                         System.out.println(playerName+" win, reached 20");
+                        fop.writeToFile(player2, pc);
                         break;
                     }else{
                         game.drawBoard(pc, player2);
@@ -115,6 +122,7 @@ public class Core {
                         /*Absoulte win */
                         if(allBlue == player2.getBoard().length){
                             System.out.println("Bluejack, "+playerName+" win");
+                            fop.writeToFile(player2, pc);
                             break;
                         }
                         System.out.println("\n\n"+playerName+" won that tour\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
@@ -142,6 +150,7 @@ public class Core {
                     if(pc.getScore() >= 3){
                         game.drawBoard(pc, player2);
                         System.out.println("PC win, reached 20");
+                        fop.writeToFile(player2, pc);
                         break;
                     }else{
                         game.drawBoard(pc, player2);
@@ -155,6 +164,7 @@ public class Core {
                         /*Absoulte win */
                         if(allBlue == pc.getBoard().length){
                             System.out.println("Bluejack, PC win");
+                            fop.writeToFile(player2, pc);
                             break;
                         }
                         System.out.println("\n\nPc won that round\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
@@ -183,6 +193,7 @@ public class Core {
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
                                 System.out.println(playerName+" win");
+                                fop.writeToFile(player2, pc);
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
@@ -200,6 +211,7 @@ public class Core {
                             if(pc.getScore() >= 3){
                                 game.drawBoard(pc, player2);
                                 System.out.println("PC win");
+                                fop.writeToFile(player2, pc);
                                 break;
                             }else{
                                 game.drawBoard(pc, player2);
@@ -216,7 +228,7 @@ public class Core {
                 }
 
                 //Make your moves
-                Computer ai = new Computer(sc,game, pc, player2);
+                Computer ai = new Computer(game, pc, player2);
                 ai.play();
 
                 
@@ -231,7 +243,7 @@ public class Core {
                 if(pc.getScore() >= 3){
                     game.drawBoard(pc, player2);
                     System.out.println(playerName+" busts, PC WIN");
-                    
+                    fop.writeToFile(player2, pc);
                     break;
                 }else{
                     game.drawBoard(pc, player2);
@@ -248,6 +260,7 @@ public class Core {
                 if(player2.getScore() >= 3){
                     game.drawBoard(pc, player2);
                     System.out.println("PC busts, "+playerName+" win");
+                    fop.writeToFile(player2, pc);
                     break;
                 }else{
                     game.drawBoard(pc, player2);
@@ -270,6 +283,7 @@ public class Core {
                         /*Absoulte win */
                         if(player2.getScore() >= 3){
                             System.out.println("\n"+playerName+" win");
+                            fop.writeToFile(player2, pc);
                             break;
                         }
                         System.out.println("\n\n"+playerName+" won that tour.\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
@@ -291,6 +305,7 @@ public class Core {
                         /*Absoulte win */
                         if(pc.getScore() >= 3){
                             System.out.println("\nPC win");
+                            fop.writeToFile(player2, pc);
                             break;
                         }
                         System.out.println("\n\nPC won that tour.\n\n\n"+playerName+": "+player2.getScore() + "\nPC: " + pc.getScore() + "\n\nPlease enter to continue...");
