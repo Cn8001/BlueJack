@@ -53,7 +53,7 @@ public class Core {
         while(true){
             if(game.getTurn() == player2){
                 //If turn is ours and we are standed, that means the game is over
-                if(player2.isStanded() || pc.isStanded()){
+                if(player2.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
                         game.drawBoard(pc, player2);
                         System.out.println("\n\nTIE\n");
@@ -178,7 +178,7 @@ public class Core {
 
 
                 /*Check for stand,If turn is on pc and pc is standed, that means the game is over */
-                if(pc.isStanded() || player2.isStanded()){
+                if(pc.isStanded()){
                     if(game.calculateSum(player2) == game.calculateSum(pc)){
                         game.drawBoard(pc, player2);
                         System.out.println("\n\nTIE\n");
