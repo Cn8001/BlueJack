@@ -38,19 +38,39 @@ public class Computer {
                 isPlayed = true;
                 System.out.println("\nComputer chose to stand.");
             }
+            else if(player.isStanded()){
+                if(game.calculateSum(player) > game.calculateSum(self)){
+                    for(int i=0;i<self.getHand().length;i++){
+                    Card c = self.getHand()[i];
+                    if(c != null){
+                        if(c.getSign() != 2 && !isPlayed){
+                            if(game.calculateSum(self) + c.getValue() <= 20 && game.calculateSum(player) <= game.calculateSum(self)+c.getValue()){
+                                choice = 3;
+                                game.throwCardAsComputer(self,i);
+                                self.setPlayedACard(true);
+                                game.setTurn(player);
+                                isPlayed = true;
+                                System.out.println("\nComputer played a card.");
+                            }
+                        }
+                    }
+                }
+                }
+            }
             //Choose to throw +
-            else if(game.calculateSum(self) < 10){
-                choice = 3;
+            else if(game.calculateSum(self) > 10){
                 for(int i=0;i<self.getHand().length;i++){
                     Card c = self.getHand()[i];
                     if(c != null){
                         if(c.getSign() != 2 && !isPlayed){
-                            choice = 3;
-                            game.throwCardAsComputer(self,i);
-                            self.setPlayedACard(true);
-                            game.setTurn(player);
-                            isPlayed = true;
-                            System.out.println("\nComputer played a card.");
+                            if(game.calculateSum(self) + c.getValue() <= 20){
+                                choice = 3;
+                                game.throwCardAsComputer(self,i);
+                                self.setPlayedACard(true);
+                                game.setTurn(player);
+                                isPlayed = true;
+                                System.out.println("\nComputer played a card.");
+                            }
                         }
                     }
                 }
@@ -65,7 +85,7 @@ public class Computer {
             }
             
             /*End thinking */
-            if(!self.getPlayedACard()){
+            if(!self.getPlayedACard() && !self.isStanded()){
                 Core.addACard(game,self);
             }
         }
