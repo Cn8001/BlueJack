@@ -32,7 +32,7 @@ public class Core {
         game.initializePlayerHand(pc);
 
         /*Draw the gameBoard */
-            game.drawBoard(pc, player2);
+        game.drawBoard(pc, player2);
 
         /*Start the game*/
         System.out.print("\nPlease enter your name > ");
@@ -136,6 +136,7 @@ public class Core {
                 status = playP2(game,pc);
                 if(status < 0){
                     System.out.println("You have entered a forbidden thing. Please restart the game.");
+                    sc.close();
                     return;
                 }
 
@@ -363,8 +364,11 @@ public class Core {
                     break;
                 /* Throw a card */
                 case 3:
-                    game.throwCard(sc, game.getTurn());
-                    game.getTurn().setPlayedACard(true);
+                    //TODO: Fixed If player enters a forbidden thing, choose the end the turn
+                    if(game.throwCard(sc, game.getTurn()) != -1)
+                        game.getTurn().setPlayedACard(true);
+                    else
+                        game.getTurn().setPlayedACard(false);
                     break;
                 default:
                 break;
@@ -374,9 +378,6 @@ public class Core {
         }
         
         return 0;
-    }
-    public static void writeFile(){
-
     }
     public static void addACard(Game game,Player p){
         int counter =0;
