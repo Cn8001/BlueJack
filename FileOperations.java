@@ -89,6 +89,6 @@ public class FileOperations {
         return fine;
     }
     public String timeStamp(){
-        return new SimpleDateFormat("yyyy.MM.dd").format(date);
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
     }
 }

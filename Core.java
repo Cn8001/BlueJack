@@ -51,6 +51,37 @@ public class Core {
         /*Main game loop */
         int status = 0;
         while(true){
+
+            /*Finish the game if gameDeck is finished */
+            int i=0,j=0;
+            for(;i<game.getGameDeck().length;i++){
+                if(game.getGameDeck()[i] == null){
+                    j++;
+                }
+            }
+            if(i==j){
+                int playerScore = player2.getScore();
+                int compScore = pc.getScore();
+                game.drawBoard(pc, player2);
+                System.out.println("Game over: GameDeck is finished.");
+                if(playerScore == compScore){
+                    /*Absolute TIE*/
+                    System.out.println("TIE");
+                }
+                else if(playerScore > compScore){
+                    /*Absolute win */
+                    System.out.println(playerName+" won");
+                }
+                else if(compScore > playerScore){
+                    /*Absolute win */
+                    System.out.println("PC won");
+                }
+                fop.writeToFile(player2, pc);
+                break;
+            }
+
+
+
             if(game.getTurn() == player2){
                 //If turn is ours and we are standed, that means the game is over
                 if(player2.isStanded()){
@@ -67,7 +98,7 @@ public class Core {
                             /*Absoulte win */
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println(playerName+" win");
+                                System.out.println(playerName+" won");
                                 fop.writeToFile(player2, pc);
                                 break;
                             }else{
@@ -85,7 +116,7 @@ public class Core {
                             /*Absoulte win */
                             if(pc.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println("PC win");
+                                System.out.println("PC won");
                                 fop.writeToFile(player2, pc);
                                 break;
                             }else{
@@ -107,7 +138,7 @@ public class Core {
                     /*Absoulte win */
                     if(player2.getScore() >= 3){
                         game.drawBoard(pc, player2);
-                        System.out.println(playerName+" win, reached 20");
+                        System.out.println(playerName+" won, reached 20");
                         fop.writeToFile(player2, pc);
                         break;
                     }else{
@@ -121,7 +152,7 @@ public class Core {
                         }
                         /*Absoulte win */
                         if(allBlue == player2.getBoard().length){
-                            System.out.println("Bluejack, "+playerName+" win");
+                            System.out.println("Bluejack, "+playerName+" won");
                             fop.writeToFile(player2, pc);
                             break;
                         }
@@ -150,7 +181,7 @@ public class Core {
                     /*Absoulte win */
                     if(pc.getScore() >= 3){
                         game.drawBoard(pc, player2);
-                        System.out.println("PC win, reached 20");
+                        System.out.println("PC won, reached 20");
                         fop.writeToFile(player2, pc);
                         break;
                     }else{
@@ -164,7 +195,7 @@ public class Core {
                         }
                         /*Absoulte win */
                         if(allBlue == pc.getBoard().length){
-                            System.out.println("Bluejack, PC win");
+                            System.out.println("Bluejack, PC won");
                             fop.writeToFile(player2, pc);
                             break;
                         }
@@ -193,7 +224,7 @@ public class Core {
                             /*Absoulte win */
                             if(player2.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println(playerName+" win");
+                                System.out.println(playerName+" won");
                                 fop.writeToFile(player2, pc);
                                 break;
                             }else{
@@ -211,7 +242,7 @@ public class Core {
                             /*Absoulte win */
                             if(pc.getScore() >= 3){
                                 game.drawBoard(pc, player2);
-                                System.out.println("PC win");
+                                System.out.println("PC won");
                                 fop.writeToFile(player2, pc);
                                 break;
                             }else{
@@ -243,7 +274,7 @@ public class Core {
                 /*Absoulte win */
                 if(pc.getScore() >= 3){
                     game.drawBoard(pc, player2);
-                    System.out.println(playerName+" busts, PC WIN");
+                    System.out.println(playerName+" busts, PC won");
                     fop.writeToFile(player2, pc);
                     break;
                 }else{
@@ -260,7 +291,7 @@ public class Core {
                 /*Absoulte win */
                 if(player2.getScore() >= 3){
                     game.drawBoard(pc, player2);
-                    System.out.println("PC busts, "+playerName+" win");
+                    System.out.println("PC busts, "+playerName+" won");
                     fop.writeToFile(player2, pc);
                     break;
                 }else{
@@ -283,7 +314,7 @@ public class Core {
                         game.drawBoard(pc, player2);
                         /*Absoulte win */
                         if(player2.getScore() >= 3){
-                            System.out.println("\n"+playerName+" win");
+                            System.out.println("\n"+playerName+" won");
                             fop.writeToFile(player2, pc);
                             break;
                         }
@@ -305,7 +336,7 @@ public class Core {
                         game.drawBoard(pc, player2);
                         /*Absoulte win */
                         if(pc.getScore() >= 3){
-                            System.out.println("\nPC win");
+                            System.out.println("\nPC won");
                             fop.writeToFile(player2, pc);
                             break;
                         }
