@@ -51,37 +51,6 @@ public class Core {
         /*Main game loop */
         int status = 0;
         while(true){
-
-            /*Finish the game if gameDeck is finished */
-            int i=0,j=0;
-            for(;i<game.getGameDeck().length;i++){
-                if(game.getGameDeck()[i] == null){
-                    j++;
-                }
-            }
-            if(i==j){
-                int playerScore = player2.getScore();
-                int compScore = pc.getScore();
-                game.drawBoard(pc, player2);
-                System.out.println("Game over: GameDeck is finished.");
-                if(playerScore == compScore){
-                    /*Absolute TIE*/
-                    System.out.println("TIE");
-                }
-                else if(playerScore > compScore){
-                    /*Absolute win */
-                    System.out.println(playerName+" won");
-                }
-                else if(compScore > playerScore){
-                    /*Absolute win */
-                    System.out.println("PC won");
-                }
-                fop.writeToFile(player2, pc);
-                break;
-            }
-
-
-
             if(game.getTurn() == player2){
                 //If turn is ours and we are standed, that means the game is over
                 if(player2.isStanded()){
@@ -175,7 +144,7 @@ public class Core {
 
                 /*Check for reaching 20 */
                 //PC reached 20
-                if(game.calculateSum(pc) == 20){
+                if(game.calculateSum(pc) == 20 && game.calculateSum(player2) != 20){
                     pc.incrementScore();
                     //PC reached 3 points
                     /*Absoulte win */
@@ -349,6 +318,34 @@ public class Core {
                     }
                 }
             }
+            /*Finish the game if gameDeck is finished */
+            int i=0,j=0;
+            for(;i<game.getGameDeck().length;i++){
+                if(game.getGameDeck()[i] == null){
+                    j++;
+                }
+            }
+            if(i==j){
+                int playerScore = player2.getScore();
+                int compScore = pc.getScore();
+                game.drawBoard(pc, player2);
+                System.out.println("Game over: GameDeck is finished.");
+                if(playerScore == compScore){
+                    /*Absolute TIE*/
+                    System.out.println("TIE");
+
+                }
+                else if(playerScore > compScore){
+                    /*Absolute win */
+                    System.out.println(playerName+" won");
+                }
+                else if(compScore > playerScore){
+                    /*Absolute win */
+                    System.out.println("PC won");
+                }
+                fop.writeToFile(player2, pc);
+                break;
+            }
         }
         sc.close();
     }
@@ -395,7 +392,6 @@ public class Core {
                     break;
                 /* Throw a card */
                 case 3:
-                    //TODO: Fixed If player enters a forbidden thing, choose the end the turn
                     if(game.throwCard(sc, game.getTurn()) != -1)
                         game.getTurn().setPlayedACard(true);
                     else
